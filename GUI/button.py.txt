@@ -1,0 +1,19 @@
+from tkinter import *
+
+
+root=Tk()
+#button=Button(root, text="click here",state=DISABLED) make it not clickable
+#button=Button(root, text="click here",padx=50,pady=50) size 
+#button=Button(root, text="click here")
+#padx=50 for size
+def mina():
+    minaLabel=Label(root, text='hello'+ e.get())
+    minaLabel.pack()
+    
+e=Entry(root,width=35,borderwidth=5)
+e.grid(row=0,column=0,columnspan=3,padx=10,pady=10)
+
+
+button=Button(root, text="Enter Your name",command=mina)
+
+root.mainloop()

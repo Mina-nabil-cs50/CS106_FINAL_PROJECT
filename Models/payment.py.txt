@@ -1,0 +1,12 @@
+class Payment:
+    def __init__(self, payment_id, room_id, amount):
+        self.payment_id = payment_id
+        self.room = room_id
+        self.amount = amount
+
+    def get_payment_info(self):
+        return {
+            "Payment ID": self.payment_id,
+            "Room ID": self.room.room_id,
+            "Amount": self.amount
+        }
