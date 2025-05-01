@@ -40,7 +40,7 @@ class HotelSystem:
                 # Print room's information
                 print(i.get_room_info())
 
-    # Define a method to generate a bill for a specific reservation
+    #method to generate a bill for a reservation
     def generate_bill(self, reservation_id):
         # Find the reservation object using the provided reservation ID
         reservation = self.find_reservation_by_id(reservation_id)

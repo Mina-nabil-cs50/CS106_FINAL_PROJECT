@@ -7,6 +7,7 @@ class Payment:
     def get_payment_info(self):
         return {
             "Payment ID": self.payment_id,
-            "Room ID": self.room.room_id,
+            "Room ID": self.room_id,
             "Amount": self.amount
         }
+    
