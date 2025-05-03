@@ -1,4 +1,6 @@
 class Room:
+    season="Summer"
+    
     def init(self, room_id, room_type, room_floor, room_number, price_per_night, available):
         self.room_id = room_id
         self.room_type = room_type
@@ -21,16 +23,4 @@ class Room:
             "Room Number": self.room_number,
             "Price Per Night": self.price_per_night,
             "Available": self.available
-        }
-class Payment:
-    def init(self, payment_id: int, room: Room, amount: float):
-        self.payment_id = payment_id
-        self.room = room
-        self.amount = amount
-
-    def get_payment_info(self):
-        return {
-            "Payment ID": self.payment_id,
-            "Room ID": self.room.room_id,
-            "Amount": self.amount
         }

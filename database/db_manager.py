@@ -1,7 +1,7 @@
 import sqlite3
 import os
 
-DB_PATH = "hotel.db"  # This will be created in the root project folder
+DB_PATH = "hotel.db"  # Path to your SQLite database file
 
 def get_connection():
     return sqlite3.connect(DB_PATH)

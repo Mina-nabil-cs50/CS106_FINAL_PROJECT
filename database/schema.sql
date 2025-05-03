@@ -17,27 +17,20 @@ CREATE TABLE IF NOT EXISTS rooms (
     is_occupied INTEGER DEFAULT 0
 );
 
--- Table: reservations
-CREATE TABLE IF NOT EXISTS reservations (
-    reservation_id INTEGER PRIMARY KEY AUTOINCREMENT,
-    guest_id INTEGER,
-    room_id INTEGER,
-    check_in_date TEXT,
-    number_of_nights INTEGER,
-    is_paid INTEGER DEFAULT 0,
-    payment_amount REAL,
-    payment_method TEXT,
-    FOREIGN KEY (guest_id) REFERENCES guests(guest_id),
-    FOREIGN KEY (room_id) REFERENCES rooms(room_id)
-);
-
 -- Table: payments
 CREATE TABLE IF NOT EXISTS payments (
     payment_id INTEGER PRIMARY KEY AUTOINCREMENT,
-    reservation_id INTEGER,
-    payment_date TEXT,
-    payment_amount REAL,
-    is_paid INTEGER,
-    payment_method TEXT,
-    FOREIGN KEY (reservation_id) REFERENCES reservations(reservation_id)
+    room_id TEXT NOT NULL,
+    amount REAL NOT NULL
+);
+
+-- Table: reservations
+CREATE TABLE IF NOT EXISTS reservations (
+    reservation_id INTEGER PRIMARY KEY AUTOINCREMENT,
+    guest_id INTEGER NOT NULL,
+    room_id INTEGER NOT NULL,
+    check_in_date TEXT NOT NULL,
+    check_out_date TEXT NOT NULL,
+    FOREIGN KEY (guest_id) REFERENCES guests (guest_id),
+    FOREIGN KEY (room_id) REFERENCES rooms (room_id)
 );
