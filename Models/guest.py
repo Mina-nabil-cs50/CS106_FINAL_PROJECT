@@ -1,4 +1,4 @@
-from Database.db_manager import get_connection
+from database.db_manager import get_connection
 
 
 class Guest:#creating the guest class
