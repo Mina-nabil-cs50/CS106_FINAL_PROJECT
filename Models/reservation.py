@@ -26,24 +26,6 @@ class Reservation:
         conn.close()
         print("Reservation saved successfully.")
 
-    @classmethod
-    def load_from_db(cls, reservation_id):
-        """
-        Load a reservation from the database by reservation_id.
-        """
-        conn = get_connection()
-        cursor = conn.cursor()
-
-        # Query the reservation record
-        cursor.execute('SELECT * FROM reservations WHERE reservation_id = ?', (reservation_id,))
-        row = cursor.fetchone()
-        conn.close()
-
-        if row:
-            # Create and return a Reservation object
-            return cls(reservation_id=row[0], guest_id=row[1], room_id=row[2], check_in_date=row[3], check_out_date=row[4])
-        else:
-            return None
 
 # Create and save a reservation
 reservation1 = Reservation(1, 1, 1, "2025-03-05", "2025-04-05")
