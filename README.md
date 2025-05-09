@@ -91,4 +91,10 @@ This project is for educational use. You may adapt and extend it freely.
 
 ## Author
 
-Built by \[Your Name]
+Built by \[Mina Nabil
+Hana Tarek
+Karim Samir
+Retaj Yousef
+Retaj Tarek
+Malak abdelwahed
+Ghalia Nassar]
