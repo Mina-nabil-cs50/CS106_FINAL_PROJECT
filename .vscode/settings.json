@@ -1,8 +1,12 @@
 {
-    "vscord.app.name": "Visual Studio Code",
-    "vscord.app.privacyMode.enable": false,
-    "vscord.status.idle.enabled": false,
-    "vscord.status.idle.check": false,
-    "scm.alwaysShowRepositories": true,
-    "git.autoRepositoryDetection": true
+    "vscord.app.name": "Visual Studio Code", // Name displayed in Discord
+    "vscord.app.privacyMode.enable": false,  // Disable privacy mode to show details
+    "vscord.status.idle.enabled": false,     // Disable idle status
+    "vscord.status.idle.check": false,       // Disable idle checks
+    "vscord.details.repository": "https://github.com/Mina-nabil-cs50/CS106_FINAL_PROJECT", // Repository URL
+    "vscord.details.branch": true,           // Show the current branch
+    "vscord.details.file": true,             // Show the current file being edited
+    "vscord.details.workspace": true,        // Show the workspace name
+    "scm.alwaysShowRepositories": true,      // Always show repositories in Source Control
+    "git.autoRepositoryDetection": true      // Automatically detect Git repositories
 }

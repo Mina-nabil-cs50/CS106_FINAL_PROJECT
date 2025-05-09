@@ -34,5 +34,17 @@ CREATE TABLE IF NOT EXISTS reservations (
     guest_id INTEGER NOT NULL,
     room_id INTEGER NOT NULL,
     check_in_date TEXT NOT NULL,
-    check_out_date TEXT NOT NULL
+    check_out_date TEXT NOT NULL,
+    FOREIGN KEY (guest_id) REFERENCES guests (guest_id),
+    FOREIGN KEY (room_id) REFERENCES rooms (room_id)
 );
+
+
+-- Table: staff
+CREATE TABLE IF NOT EXISTS staff (
+    staff_id INTEGER PRIMARY KEY AUTOINCREMENT,
+    staff_name TEXT NOT NULL,
+    staff_age INTEGER NOT NULL,
+    staff_role TEXT NOT NULL
+);
+

@@ -18,7 +18,6 @@ def setup_database():
     conn.close()
     print(" Database setup complete.")
 
-# Optional: test setup immediately when run directly
 if __name__ == "__main__":
     setup_database()
-
+print("ran")
