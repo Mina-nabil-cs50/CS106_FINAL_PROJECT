@@ -24,3 +24,5 @@ class Room:
             "Price Per Night": self.price_per_night,
             "Available": self.available
         }
+
+

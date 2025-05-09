@@ -3,9 +3,9 @@ from Models.reservation import Reservation
 from datetime import date
 
 class Payment:
-    def __init__(self, payment_id: int, reservation_id: int, payment_date: date, payment_amount: int, is_paid: bool, payment_method: str):
+    def __init__(self, payment_id: int, reservation: Reservation, payment_date: date, payment_amount: int, is_paid: bool, payment_method: str):
         self.payment_id = payment_id
-        self.reservation_id = reservation_id  # Store the reservation ID directly
+        self.reservation_id = reservation.reservation_id  # Link to the reservation ID
         self.payment_date = payment_date
         self.payment_amount = payment_amount
         self.is_paid = is_paid
@@ -42,20 +42,30 @@ class Payment:
         conn.commit()
         conn.close()
 
+if __name__ == "__main__":
+    # Create and save a reservation
+    reservation1 = Reservation(1, 1, 1, "2025-03-05", "2025-04-05")
+    reservation1.save_to_db()
 
+    # Create a payment linked to the reservation
+    payment1 = Payment(
+        payment_id=1,
+        reservation=reservation1,  # Pass the Reservation object
+        payment_date="2025-05-02",
+        payment_amount=199,
+        is_paid=True,
+        payment_method="card"
+    )
 
+    # Save the payment to the database
+    payment1.save_to_db()
+    print("Payment saved to the database.")
 
-payment1 = Payment(
-    payment_id=1,
-    reservation_id=0,  
-    payment_date="2025-05-02",
-    payment_amount=199,
-    is_paid=True,
-    payment_method="card"
-)
-
-#
-payment1.save_to_db()
-print("Payment saved to the database.")
-
-
+    # Query all payments
+    conn = get_connection()
+    cursor = conn.cursor()
+    cursor.execute("SELECT * FROM payments;")
+    payments = cursor.fetchall()
+    for payment in payments:
+        print(payment)
+    conn.close()

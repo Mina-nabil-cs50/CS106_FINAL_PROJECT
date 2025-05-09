@@ -1,0 +1,6 @@
+{
+    "vscord.app.name": "Visual Studio Code",
+    "vscord.app.privacyMode.enable": false,
+    "vscord.status.idle.enabled": false,
+    "vscord.status.idle.check": false
+}

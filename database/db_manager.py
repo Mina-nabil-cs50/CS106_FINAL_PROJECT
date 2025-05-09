@@ -1,7 +1,7 @@
 import sqlite3
 import os
 
-DB_PATH = "hotel.db"  # Path to your SQLite database file
+DB_PATH = "c:/Users/minas/OneDrive/Desktop/TERM 2/CS106-Project/database/hotel.db"  # Path to your SQLite database file
 
 def get_connection():
     return sqlite3.connect(DB_PATH)

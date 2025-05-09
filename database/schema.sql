@@ -20,8 +20,12 @@ CREATE TABLE IF NOT EXISTS rooms (
 -- Table: payments
 CREATE TABLE IF NOT EXISTS payments (
     payment_id INTEGER PRIMARY KEY AUTOINCREMENT,
-    room_id TEXT NOT NULL,
-    amount REAL NOT NULL
+    reservation_id INTEGER NOT NULL,
+    payment_date TEXT NOT NULL,
+    payment_amount REAL NOT NULL,
+    is_paid INTEGER DEFAULT 0,
+    payment_method TEXT NOT NULL,
+    FOREIGN KEY (reservation_id) REFERENCES reservations (reservation_id)
 );
 
 -- Table: reservations
@@ -30,7 +34,5 @@ CREATE TABLE IF NOT EXISTS reservations (
     guest_id INTEGER NOT NULL,
     room_id INTEGER NOT NULL,
     check_in_date TEXT NOT NULL,
-    check_out_date TEXT NOT NULL,
-    FOREIGN KEY (guest_id) REFERENCES guests (guest_id),
-    FOREIGN KEY (room_id) REFERENCES rooms (room_id)
+    check_out_date TEXT NOT NULL
 );
