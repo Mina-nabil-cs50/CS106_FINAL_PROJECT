@@ -21,9 +21,14 @@ A simple offline desktop hotel reservation management system written in Python, 
 ```plaintext
 hotel_system/
 ├── main.py                  # Entry point
-├── models/                 # Class files: Guest, Room, Reservation, Payment, Staff, Admin
+├── models/                 # Class files: guest.py, room.py, reservation.py, payment.py, staff.py, admin.py, hotel_system.py
 ├── database/               # SQLite setup and operations
+│   ├── db_manager.py
+│   ├── schema.sql
+│   └── hotel.db
 ├── gui/                    # GUI screens using Tkinter
+│   ├── button.py
+│   └── GUI_v1/
 ├── utils/                  # Helpers and constants
 └── README.md               # This file
 ```
@@ -61,7 +66,7 @@ hotel_system/
 1. Clone the repository:
 
 ```bash
-git clone https://github.com/yourusername/hotel-reservation-system.git
+git clone https://github.com/Mina-nabil-cs50/CS106_FINAL_PROJECT
 cd hotel-reservation-system
 ```
 
@@ -89,12 +94,14 @@ This project is for educational use. You may adapt and extend it freely.
 
 ---
 
-## Author
+## Authors
 
-Built by \[Mina Nabil
-Hana Tarek
-Karim Samir
-Retaj Yousef
-Retaj Tarek
-Malak abdelwahed
-Ghalia Nassar]
+Built by:
+
+* Mina Nabil
+* Hana Tarek
+* Karim Samir
+* Retaj Yousef
+* Retaj Tarek
+* Malak Abdelwahed
+* Ghalia Nassar
