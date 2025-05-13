@@ -1,7 +1,7 @@
 from database.db_manager import get_connection
 
 
-class Guest:  # Creating the guest class
+class Guest:  #Creating the guest class
     def __init__(self, guest_id: int, full_name: str, phone_number: str, email: str, id_document: str, guest_age: int):
         self.guest_id = guest_id
         self.full_name = full_name
@@ -29,16 +29,11 @@ class Guest:  # Creating the guest class
         conn = get_connection()
         cursor = conn.cursor()
 
-        # Insert or update the guest record
-        cursor.execute('''
-            INSERT OR REPLACE INTO guests (guest_id, full_name, phone_number, email, id_document, guest_age)
-            VALUES (?, ?, ?, ?, ?, ?)
-        ''', (self.guest_id, self.full_name, self.phone_number, self.email, self.id_document, self.guest_age))
+        cursor.execute((self.guest_id, self.full_name, self.phone_number, self.email, self.id_document, self.guest_age))
 
         conn.commit()
         conn.close()
 
-        # Call the function to print the object
         self.print_added_object()
 
 

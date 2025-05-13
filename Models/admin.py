@@ -17,10 +17,7 @@ class Admin(Staff):
         cursor = conn.cursor()
 
         # Insert or replace el admin f el table bta3 staff
-        cursor.execute('''
-            INSERT OR REPLACE INTO staff (staff_id, staff_name, staff_age, staff_role)
-            VALUES (?, ?, ?, ?)
-        ''', (self.staff_id, self.staff_name, self.staff_age, self.staff_role))
+        cursor.execute((self.staff_id, self.staff_name, self.staff_age, self.staff_role))
 
         # Commit el changes w close el connection
         conn.commit()
@@ -29,9 +26,6 @@ class Admin(Staff):
 
 # Function deh betensure en fe default admin w staff f el database
 def ensure_admin_and_staff():
-    """
-    Ensure that at least one admin and one default staff member exist in the database.
-    """
     # Get el connection bta3 el database
     conn = get_connection()
     cursor = conn.cursor()
@@ -153,9 +147,6 @@ def admin_functions():
 
 # Function deh betedit el room details
 def edit_room(room_id):
-    """
-    Edit el room details f el database.
-    """
     conn = get_connection()
     cursor = conn.cursor()
 
@@ -178,11 +169,7 @@ def edit_room(room_id):
         updated_available = new_available == "yes" if new_available else bool(room[5])
 
         # Update el room f el database
-        cursor.execute('''
-            UPDATE rooms
-            SET room_type = ?, room_floor = ?, room_number = ?, price_per_night = ?, is_occupied = ?
-            WHERE room_id = ?
-        ''', (updated_type, updated_floor, updated_number, updated_price, int(not updated_available), room_id))
+        cursor.execute(updated_type, updated_floor, updated_number, updated_price, int(not updated_available), room_id)
 
         conn.commit()
         print("Room with ID ", room_id, " has been updated successfully.")
@@ -214,9 +201,6 @@ def remove_room(room_id):
 
 # Function deh betedit el staff details
 def edit_staff(staff_id):
-    """
-    Edit el staff details f el database.
-    """
     conn = get_connection()
     cursor = conn.cursor()
 
@@ -235,11 +219,7 @@ def edit_staff(staff_id):
         updated_role = new_role if new_role else staff[3]
 
         # Update el staff f el database
-        cursor.execute('''
-            UPDATE staff
-            SET staff_name = ?, staff_age = ?, staff_role = ?
-            WHERE staff_id = ?
-        ''', (updated_name, updated_age, updated_role, staff_id))
+        cursor.execute((updated_name, updated_age, updated_role, staff_id))
 
         conn.commit()
         print("Staff member with ID ", staff_id, " has been updated successfully.")
@@ -251,18 +231,15 @@ def edit_staff(staff_id):
 
 # Function deh betremove el staff
 def remove_staff(staff_id):
-    """
-    Remove el staff men el database.
-    """
     conn = get_connection()
     cursor = conn.cursor()
 
     # Check law el staff mawgood
-    cursor.execute("SELECT * FROM staff WHERE staff_id = ?", (staff_id,))
+    cursor.execute((staff_id,))
     staff = cursor.fetchone()
     if staff:
         # Delete el staff
-        cursor.execute("DELETE FROM staff WHERE staff_id = ?", (staff_id,))
+        cursor.execute((staff_id,))
         conn.commit()
         print("Staff member with ID ", staff_id, " has been removed successfully.")
     else:

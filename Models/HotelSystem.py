@@ -5,7 +5,7 @@ from Models.admin import admin_functions  # Import admin functions
 from Models.staff import staff_functions  # Import staff functions
 
 
-# Define el function el ra2esiya bta3t el menu
+#Define el function el ra2esiya bta3t el menu
 def main_menu():
     #Loop infinity (while True) 3shan el menu yfdal yesh8al
     while True:
@@ -40,5 +40,4 @@ def main_menu():
 if __name__ == "__main__":
     #Call el main_menu function 3shan el program yebda2 men el menu el ra2esi
     main_menu()
-
 

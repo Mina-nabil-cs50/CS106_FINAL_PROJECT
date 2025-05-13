@@ -5,7 +5,7 @@ CREATE TABLE IF NOT EXISTS guests (
     phone_number TEXT,
     email TEXT,
     id_document TEXT,
-    guest_age INTEGER  -- Add age column
+    guest_age INTEGER
 );
 
 -- Table: rooms

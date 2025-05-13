@@ -34,10 +34,17 @@ class Reservation:
         conn = get_connection()
         cursor = conn.cursor()
 
-        cursor.execute((self.reservation_id, self.room_id, self.check_in_date, self.check_out_date))
-        cursor.execute('DELETE FROM reservation_guests WHERE reservation_id = ?', (self.reservation_id,))
-        for guest_id in self.guest_ids:
-            cursor.execute((self.reservation_id, guest_id))
+    
+        main_guest_id = self.guest_ids[0] if self.guest_ids else None
+        cursor.execute(
+            '''
+            INSERT OR REPLACE INTO reservations (reservation_id, guest_id, room_id, check_in_date, check_out_date)
+            VALUES (?, ?, ?, ?, ?)
+            ''',
+            (self.reservation_id, main_guest_id, self.room_id, self.check_in_date, self.check_out_date)
+        )
+
+        # If you have a reservation_guests linking table, you would insert all guest_ids here.
 
         conn.commit()
         conn.close()
