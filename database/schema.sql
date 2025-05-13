@@ -4,7 +4,8 @@ CREATE TABLE IF NOT EXISTS guests (
     full_name TEXT NOT NULL,
     phone_number TEXT,
     email TEXT,
-    id_document TEXT
+    id_document TEXT,
+    guest_age INTEGER  -- Add age column
 );
 
 -- Table: rooms
@@ -39,7 +40,6 @@ CREATE TABLE IF NOT EXISTS reservations (
     FOREIGN KEY (room_id) REFERENCES rooms (room_id)
 );
 
-
 -- Table: staff
 CREATE TABLE IF NOT EXISTS staff (
     staff_id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -47,4 +47,15 @@ CREATE TABLE IF NOT EXISTS staff (
     staff_age INTEGER NOT NULL,
     staff_role TEXT NOT NULL
 );
+
+-- Table: settings
+CREATE TABLE IF NOT EXISTS settings (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    season TEXT NOT NULL
+);
+
+-- Insert default season if not already present
+INSERT OR IGNORE INTO settings (id, season) VALUES (1, 'summer');
+
+
 

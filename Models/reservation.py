@@ -1,34 +1,43 @@
 from database.db_manager import get_connection
+from Models.room import Room
+from Models.guest import Guest
+
 
 class Reservation:
-    def __init__(self, reservation_id: int, guest_id: int, room_id: int, check_in_date: str, check_out_date: str):
+    def __init__(self, reservation_id: int, guest_ids: list[int], room_id: int, check_in_date: str, check_out_date: str):
         self.reservation_id = reservation_id
-        self.guest_id = guest_id
+        self.guest_ids = guest_ids
         self.room_id = room_id
         self.check_in_date = check_in_date
         self.check_out_date = check_out_date
 
-    def print_added_object(self):
-        """
-        Print the object after it is saved to the database.
-        """
-        print(f"Saved to database: Reservation(reservation_id={self.reservation_id}, guest_id={self.guest_id}, room_id={self.room_id}, check_in_date='{self.check_in_date}', check_out_date='{self.check_out_date}')")
+    def calculate_payment(self, guests: list[Guest], room: Room):
+        total_price = room.price_per_night * len(guests)#calculates the total price depending on 2ad eah guests f el reservation
+
+        if room.season.lower() == "summer":
+            total_price *= 1.25
+
+        age_distribution = {"child": 0.5,"adult": 1.0,"senior": 0.75}
+
+        payments = {}
+        for guest in guests:
+            if guest.guest_age < 12:
+                payments[guest.full_name] = total_price * age_distribution["child"] / len(guests)
+            elif guest.guest_age >= 60:
+                payments[guest.full_name] = total_price * age_distribution["senior"] / len(guests)
+            else:
+                payments[guest.full_name] = total_price * age_distribution["adult"] / len(guests)
+
+        return total_price, payments
 
     def save_to_db(self):
-        """
-        Save the reservation to the database.
-        """
         conn = get_connection()
         cursor = conn.cursor()
 
-        # Insert or update the reservation record
-        cursor.execute('''
-            INSERT OR REPLACE INTO reservations (reservation_id, guest_id, room_id, check_in_date, check_out_date)
-            VALUES (?, ?, ?, ?, ?)
-        ''', (self.reservation_id, self.guest_id, self.room_id, self.check_in_date, self.check_out_date))
+        cursor.execute((self.reservation_id, self.room_id, self.check_in_date, self.check_out_date))
+        cursor.execute('DELETE FROM reservation_guests WHERE reservation_id = ?', (self.reservation_id,))
+        for guest_id in self.guest_ids:
+            cursor.execute((self.reservation_id, guest_id))
 
         conn.commit()
         conn.close()
-
-        # Call the function to print the object
-        self.print_added_object()

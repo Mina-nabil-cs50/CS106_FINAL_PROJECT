@@ -38,18 +38,19 @@ def staff_functions():
     choice = input("Enter your choice (1/2/3/4): ")
 
     if choice == "1":
-        #Add a Guest
+        # Add a Guest
         print("\n Add a Guest ")
         guest_id = int(input("Enter Guest ID: "))
         full_name = input("Enter Full Name: ")
         phone_number = input("Enter Phone Number: ")
         email = input("Enter Email: ")
         id_document = input("Enter ID Document: ")
-        guest = Guest(guest_id, full_name, phone_number, email, id_document)
+        guest_age = int(input("Enter Guest Age: "))  # Add guest_age input
+        guest = Guest(guest_id, full_name, phone_number, email, id_document, guest_age)  # Pass guest_age
         guest.save_to_db()
         print("Guest added successfully!")
     elif choice == "2":
-        #Add a Reservation
+        # Add a Reservation
         print("\n Add a Reservation ")
         reservation_id = int(input("Enter Reservation ID: "))
         guest_id = int(input("Enter Guest ID for the Reservation: "))
@@ -60,7 +61,7 @@ def staff_functions():
         reservation.save_to_db()
         print("Reservation added successfully!")
     elif choice == "3":
-        #Add a Payment
+        # Add a Payment
         print("\n Add a Payment ")
         payment_id = int(input("Enter Payment ID: "))
         reservation_id = int(input("Enter Reservation ID for the Payment: "))
@@ -72,7 +73,7 @@ def staff_functions():
         payment.save_to_db()
         print("Payment added successfully!")
     elif choice == "4":
-        #Delete a Reservation
+        # Delete a Reservation
         print("\n Delete a Reservation ")
         reservation_id = int(input("Enter the Reservation ID to delete: "))
         delete_reservation(reservation_id)

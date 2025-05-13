@@ -1,4 +1,8 @@
 from database.db_manager import get_connection
+from Models.reservation import Reservation
+from Models.room import Room
+from Models.guest import Guest
+
 
 class Payment:
     def __init__(self, payment_id: int, reservation_id: int, payment_date: str, payment_amount: float, is_paid: bool, payment_method: str):
@@ -9,11 +13,13 @@ class Payment:
         self.is_paid = is_paid
         self.payment_method = payment_method
 
-    def print_added_object(self):
+    def calculate_payment(self, reservation: Reservation, guests: list[Guest], room: Room):
         """
-        Print the object after it is saved to the database.
+        Calculate the payment amount using the reservation and room details.
         """
-        print(f"Saved to database: Payment(payment_id={self.payment_id}, reservation_id={self.reservation_id}, payment_date='{self.payment_date}', payment_amount={self.payment_amount}, is_paid={self.is_paid}, payment_method='{self.payment_method}')")
+        total_price, payments = reservation.calculate_payment(guests, room)
+        self.payment_amount = total_price
+        return payments
 
     def save_to_db(self):
         """
@@ -30,6 +36,3 @@ class Payment:
 
         conn.commit()
         conn.close()
-
-        # Call the function to print the object
-        self.print_added_object()

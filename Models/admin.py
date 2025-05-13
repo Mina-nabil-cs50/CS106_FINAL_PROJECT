@@ -4,7 +4,7 @@ from Models.guest import Guest
 from Models.staff import Staff
 from database.db_manager import get_connection
 
-# Class Admin betextend men Staff
+
 class Admin(Staff):
     def __init__(self, staff_id: int, staff_name: str, staff_age: int):
         # Call el constructor bta3 el parent class w set el role to "admin"
@@ -74,8 +74,9 @@ def admin_functions():
     print("5. Add a New Staff Member")
     print("6. Edit a Staff Member")
     print("7. Remove a Staff Member")
-    print("8. Exit")
-    choice = input("Enter your choice (1/2/3/4/5/6/7/8): ")
+    print("8. Change Season")
+    print("9. Exit")
+    choice = input("Enter your choice (1/2/3/4/5/6/7/8/9): ")
 
     # Handle el choice bta3 el user
     if choice == "1":
@@ -87,7 +88,7 @@ def admin_functions():
         room_number = input("Enter Room Number: ")
         price_per_night = float(input("Enter Price Per Night: "))
         available = input("Is the room available? (yes/no): ").lower() == "yes"
-        room = Room(room_id, room_type, room_floor, room_number, price_per_night, available)  # use the class method and assign el attributes
+        room = Room(room_id, room_type, room_floor, room_number, price_per_night, available)
         room.save_to_db()
         print("Room added successfully!")
     elif choice == "2":
@@ -135,6 +136,16 @@ def admin_functions():
         staff_id = int(input("Enter the Staff ID to remove: "))
         remove_staff(staff_id)
     elif choice == "8":
+        print("\n--- Change Season ---")
+        print("Available seasons: winter, summer, spring, fall")
+        new_season = input("Enter the new season: ").strip().lower()
+
+        if new_season in ["winter", "summer", "spring", "fall"]:
+            Room.change_season(new_season)
+            print("Season successfully changed to", new_season)
+        else:
+            print("Invalid season. Please enter one of the following: winter, summer, spring, fall.")
+    elif choice == "9":
         return
     else:
         print("Invalid choice. Returning to main menu.")

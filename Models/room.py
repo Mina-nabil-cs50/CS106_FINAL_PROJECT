@@ -1,8 +1,8 @@
 from database.db_manager import get_connection
 
 class Room:
-    season = "Summer"
-    
+    season = "summer"  # Default season
+
     def __init__(self, room_id: int, room_type: str, room_floor: int, room_number: str, price_per_night: float, available: bool):
         self.room_id = room_id
         self.room_type = room_type
@@ -10,6 +10,18 @@ class Room:
         self.room_number = room_number
         self.price_per_night = price_per_night
         self.available = available
+
+    @classmethod
+    def change_season(cls, new_season: str):
+        cls.season = new_season  # Update the class-level season attribute
+        print("Season changed to", cls.season)
+
+        # Update the season in the database
+        conn = get_connection()
+        cursor = conn.cursor()
+        cursor.execute("UPDATE settings SET season = ? WHERE id = 1", (cls.season,))
+        conn.commit()
+        conn.close()
 
     def mark_as_occupied(self):
         self.available = False
