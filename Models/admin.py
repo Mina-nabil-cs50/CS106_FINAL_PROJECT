@@ -169,7 +169,13 @@ def edit_room(room_id):
         updated_available = new_available == "yes" if new_available else bool(room[5])
 
         # Update el room f el database
-        cursor.execute(updated_type, updated_floor, updated_number, updated_price, int(not updated_available), room_id)
+        cursor.execute(
+            '''
+            UPDATE rooms SET room_type = ?, room_floor = ?, room_number = ?, price_per_night = ?, is_occupied = ?
+            WHERE room_id = ?
+            ''',
+            (updated_type, updated_floor, updated_number, updated_price, int(not updated_available), room_id)
+        )
 
         conn.commit()
         print("Room with ID ", room_id, " has been updated successfully.")
@@ -219,7 +225,13 @@ def edit_staff(staff_id):
         updated_role = new_role if new_role else staff[3]
 
         # Update el staff f el database
-        cursor.execute((updated_name, updated_age, updated_role, staff_id))
+        cursor.execute(
+            '''
+            UPDATE staff SET staff_name = ?, staff_age = ?, staff_role = ?
+            WHERE staff_id = ?
+            ''',
+            (updated_name, updated_age, updated_role, staff_id)
+        )
 
         conn.commit()
         print("Staff member with ID ", staff_id, " has been updated successfully.")
@@ -235,11 +247,11 @@ def remove_staff(staff_id):
     cursor = conn.cursor()
 
     # Check law el staff mawgood
-    cursor.execute((staff_id,))
+    cursor.execute("SELECT * FROM staff WHERE staff_id = ?", (staff_id,))
     staff = cursor.fetchone()
     if staff:
         # Delete el staff
-        cursor.execute((staff_id,))
+        cursor.execute("DELETE FROM staff WHERE staff_id = ?", (staff_id,))
         conn.commit()
         print("Staff member with ID ", staff_id, " has been removed successfully.")
     else:

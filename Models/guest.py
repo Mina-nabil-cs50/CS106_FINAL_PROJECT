@@ -29,7 +29,13 @@ class Guest:  #Creating the guest class
         conn = get_connection()
         cursor = conn.cursor()
 
-        cursor.execute((self.guest_id, self.full_name, self.phone_number, self.email, self.id_document, self.guest_age))
+        cursor.execute(
+            '''
+            INSERT OR REPLACE INTO guests (guest_id, full_name, phone_number, email, id_document, guest_age)
+            VALUES (?, ?, ?, ?, ?, ?)
+            ''',
+            (self.guest_id, self.full_name, self.phone_number, self.email, self.id_document, self.guest_age)
+        )
 
         conn.commit()
         conn.close()
