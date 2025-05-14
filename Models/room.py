@@ -3,7 +3,8 @@ from database.db_manager import get_connection
 class Room:
     season = "summer"  # Default season
 
-    def __init__(self, room_id: int, room_type: str, room_floor: int, room_number: str, price_per_night: float, available: bool):
+    # el function di betet3amel lama te3mel object Room gedid
+    def __init__(self, room_id, room_type, room_floor, room_number, price_per_night, available):
         self.room_id = room_id
         self.room_type = room_type
         self.room_floor = room_floor
@@ -43,13 +44,15 @@ class Room:
         }
 
     def print_added_object(self):
-        print(f"Saved to database: Room(room_id={self.room_id}, room_type='{self.room_type}', room_floor={self.room_floor}, room_number='{self.room_number}', price_per_night={self.price_per_night}, available={self.available})")
+        # hena ba3mel print lel data b tari2a sadeqa lel beginner
+        print("Saved to database: Room(room_id=", self.room_id, ", room_type='", self.room_type, "', room_floor=", self.room_floor, ", room_number='", self.room_number, "', price_per_night=", self.price_per_night, ", available=", self.available, ")")
 
     def save_to_db(self):
+        # di function bet7ot el room fel database
         conn = get_connection()
         cursor = conn.cursor()
 
-        # Insert or update the room record
+        # hena by7ot el data fel table rooms
         cursor.execute(
             '''
             INSERT OR REPLACE INTO rooms (room_id, room_number, room_type, room_floor, price_per_night, is_occupied)
@@ -61,6 +64,6 @@ class Room:
         conn.commit()
         conn.close()
 
-        # Call the function to print the object
+        # ba3d ma y7ot el data, by3mel print 3la el object
         self.print_added_object()
 

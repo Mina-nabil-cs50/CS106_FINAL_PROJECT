@@ -17,7 +17,13 @@ class Admin(Staff):
         cursor = conn.cursor()
 
         # Insert or replace el admin f el table bta3 staff
-        cursor.execute((self.staff_id, self.staff_name, self.staff_age, self.staff_role))
+        cursor.execute(
+            '''
+            INSERT OR REPLACE INTO staff (staff_id, staff_name, staff_age, staff_role)
+            VALUES (?, ?, ?, ?)
+            ''',
+            (self.staff_id, self.staff_name, self.staff_age, self.staff_role)
+        )
 
         # Commit el changes w close el connection
         conn.commit()
@@ -93,7 +99,7 @@ def admin_functions():
                 room_id=i,
                 room_type="Single" if i % 2 == 0 else "Double",
                 room_floor=(i // 10) + 1,
-                room_number=f"{(i // 10) + 1}{i % 10:02}",
+                room_number=str((i // 10) + 1) + str(i % 10).zfill(2),
                 price_per_night=50.0 + (i % 5) * 10,
                 available=True,
             )

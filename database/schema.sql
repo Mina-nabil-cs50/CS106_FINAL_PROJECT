@@ -45,8 +45,16 @@ CREATE TABLE IF NOT EXISTS staff (
     staff_id INTEGER PRIMARY KEY AUTOINCREMENT,
     staff_name TEXT NOT NULL,
     staff_age INTEGER NOT NULL,
-    staff_role TEXT NOT NULL
+    staff_role TEXT NOT NULL,
+    username TEXT,
+    password TEXT
 );
+
+-- Insert sample admin and staff users
+INSERT INTO staff (staff_name, staff_age, staff_role, username, password)
+VALUES 
+    ('Admin User', 30, 'admin', 'admin', 'admin123'),
+    ('Staff User', 25, 'staff', 'staff1', 'staff123');
 
 -- Table: settings
 CREATE TABLE IF NOT EXISTS settings (

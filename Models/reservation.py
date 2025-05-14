@@ -4,47 +4,45 @@ from Models.guest import Guest
 
 
 class Reservation:
-    def __init__(self, reservation_id: int, guest_ids: list[int], room_id: int, check_in_date: str, check_out_date: str):
+    def __init__(self, reservation_id, guest_ids, room_id, check_in_date, check_out_date):
+        # el function di betet3amel lama te3mel object Reservation gedid
         self.reservation_id = reservation_id
-        self.guest_ids = guest_ids
+        self.guest_ids = guest_ids  # list of guest ids
         self.room_id = room_id
         self.check_in_date = check_in_date
         self.check_out_date = check_out_date
 
-    def calculate_payment(self, guests: list[Guest], room: Room):
-        total_price = room.price_per_night * len(guests)#calculates the total price depending on 2ad eah guests f el reservation
-
-        if room.season.lower() == "summer":
-            total_price *= 1.25
-
-        age_distribution = {"child": 0.5,"adult": 1.0,"senior": 0.75}
-
-        payments = {}
-        for guest in guests:
-            if guest.guest_age < 12:
-                payments[guest.full_name] = total_price * age_distribution["child"] / len(guests)
-            elif guest.guest_age >= 60:
-                payments[guest.full_name] = total_price * age_distribution["senior"] / len(guests)
-            else:
-                payments[guest.full_name] = total_price * age_distribution["adult"] / len(guests)
-
-        return total_price, payments
+    def print_added_object(self):
+        # hena ba3mel print lel data b tari2a sadeqa lel beginner
+        print("Saved to database: Reservation(reservation_id=", self.reservation_id, ", guest_ids=", self.guest_ids, ", room_id=", self.room_id, ", check_in_date=", self.check_in_date, ", check_out_date=", self.check_out_date, ")")
 
     def save_to_db(self):
+        # di function bet7ot el reservation fel database
         conn = get_connection()
         cursor = conn.cursor()
 
-    
-        main_guest_id = self.guest_ids[0] if self.guest_ids else None
-        cursor.execute(
-            '''
-            INSERT OR REPLACE INTO reservations (reservation_id, guest_id, room_id, check_in_date, check_out_date)
-            VALUES (?, ?, ?, ?, ?)
-            ''',
-            (self.reservation_id, main_guest_id, self.room_id, self.check_in_date, self.check_out_date)
-        )
-
-        # If you have a reservation_guests linking table, you would insert all guest_ids here.
+        # hena by7ot el data fel table reservations
+        for guest_id in self.guest_ids:
+            cursor.execute(
+                '''
+                INSERT OR REPLACE INTO reservations (reservation_id, guest_id, room_id, check_in_date, check_out_date)
+                VALUES (?, ?, ?, ?, ?)
+                ''',
+                (self.reservation_id, guest_id, self.room_id, self.check_in_date, self.check_out_date)
+            )
 
         conn.commit()
         conn.close()
+
+        # ba3d ma y7ot el data, by3mel print 3la el object
+        self.print_added_object()
+
+    def calculate_payment(self, guests, room):
+        # di function bet7seb el total price 3la 7asab el room w el days
+        from datetime import datetime
+        check_in = datetime.strptime(self.check_in_date, "%Y-%m-%d")
+        check_out = datetime.strptime(self.check_out_date, "%Y-%m-%d")
+        nights = (check_out - check_in).days
+        total_price = nights * room.price_per_night
+        # hena momken tzawed discounts aw taxes law 3ayez
+        return total_price, None

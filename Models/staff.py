@@ -3,24 +3,31 @@ from Models.reservation import Reservation
 from Models.payment import Payment
 from database.db_manager import get_connection  
 
-
 class Staff:
     def __init__(self, staff_id: int, staff_name: str, staff_age: int, staff_role: str = "staff"):
+        # el function di betet3amel lama te3mel object Staff gedid
         self.staff_id = staff_id
         self.staff_name = staff_name
         self.staff_age = staff_age
         self.staff_role = staff_role  
 
     def save_to_db(self):
+        # di function bet7ot el staff fel database
         conn = get_connection()
         cursor = conn.cursor()
 
-        cursor.execute((self.staff_id, self.staff_name, self.staff_age, self.staff_role))
+        # hena by7ot el data fel table staff
+        cursor.execute(
+            '''
+            INSERT OR REPLACE INTO staff (staff_id, staff_name, staff_age, staff_role)
+            VALUES (?, ?, ?, ?)
+            ''',
+            (self.staff_id, self.staff_name, self.staff_age, self.staff_role)
+        )
 
         conn.commit()
         conn.close()
-        print("Saved to database: Staff(staff_id=",self.staff_id, "staff_name=",self.staff_name, "staff_age=",self.staff_age, "staff_role=",self.staff_role,")")
-
+        print("Saved to database: Staff(staff_id=", self.staff_id, "staff_name=", self.staff_name, "staff_age=", self.staff_age, "staff_role=", self.staff_role, ")")
 
 def staff_functions():
     print("\n Staff Functions ")
@@ -70,31 +77,32 @@ def staff_functions():
     else:
         print("Invalid choice. Returning to main menu.")
 
-
 def delete_reservation(reservation_id):
-
+    # di function betms7 el reservation men el database
     conn = get_connection()
     cursor = conn.cursor()
 
+    # hena byshoof el reservation mawgood wala la2
+    cursor.execute("SELECT * FROM reservations WHERE reservation_id = ?", (reservation_id,))
     reservation = cursor.fetchone()
     if reservation:
         cursor.execute("DELETE FROM reservations WHERE reservation_id = ?", (reservation_id,))
         conn.commit()
-        print("Reservation with ID",reservation_id," has been deleted successfully.")
+        print("Reservation with ID", reservation_id, "has been deleted successfully.")
     else:
-        print("No reservation found with ID",reservation_id)
+        print("No reservation found with ID", reservation_id)
 
     conn.close()
 
-
 def edit_guest(guest_id):
+    # di function bet3adel el data bta3t el guest
     conn = get_connection()
     cursor = conn.cursor()
 
-    cursor.execute((guest_id,))
+    cursor.execute("SELECT * FROM guests WHERE guest_id = ?", (guest_id,))
     guest = cursor.fetchone()
     if guest:
-        print("Current Info: ID=",guest[0], "Name=",guest[1], "Phone=",guest[2], "Email=",guest[3], "ID Document=",guest[4])
+        print("Current Info: ID=", guest[0], "Name=", guest[1], "Phone=", guest[2], "Email=", guest[3], "ID Document=", guest[4])
         new_name = input("Enter new name (leave blank to keep current): ")
         new_phone = input("Enter new phone number (leave blank to keep current): ")
         new_email = input("Enter new email (leave blank to keep current): ")
@@ -105,29 +113,34 @@ def edit_guest(guest_id):
         updated_email = new_email if new_email else guest[3]
         updated_id_document = new_id_document if new_id_document else guest[4]
 
-        cursor.execute((updated_name, updated_phone, updated_email, updated_id_document, guest_id))
+        cursor.execute(
+            '''
+            UPDATE guests SET full_name = ?, phone_number = ?, email = ?, id_document = ?
+            WHERE guest_id = ?
+            ''',
+            (updated_name, updated_phone, updated_email, updated_id_document, guest_id)
+        )
 
         conn.commit()
-        print("Guest with ID",guest_id,"has been updated successfully")
+        print("Guest with ID", guest_id, "has been updated successfully")
     else:
         print("No guest found with ID", guest_id)
 
     conn.close()
 
-
 def remove_guest(guest_id):
-
+    # di function betms7 el guest men el database
     conn = get_connection()
     cursor = conn.cursor()
 
     # Check if the guest exists
-    cursor.execute((guest_id,))
+    cursor.execute("SELECT * FROM guests WHERE guest_id = ?", (guest_id,))
     guest = cursor.fetchone()
     if guest:
         # Delete the guest
-        cursor.execute((guest_id,))
+        cursor.execute("DELETE FROM guests WHERE guest_id = ?", (guest_id,))
         conn.commit()
-        print("Guest with ID", guest_id,"has been removed successfully.")
+        print("Guest with ID", guest_id, "has been removed successfully.")
     else:
         print("No guest found with ID", guest_id)
 
