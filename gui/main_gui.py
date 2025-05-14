@@ -1,4 +1,4 @@
-import tkinter as tk
+import customtkinter
 from tkinter import messagebox
 import sqlite3
 
@@ -33,18 +33,21 @@ def login():
     else:
         messagebox.showerror("Login Failed", "Invalid username or password.")
 
-root = tk.Tk()
+customtkinter.set_appearance_mode("light")
+customtkinter.set_default_color_theme("blue")
+
+root = customtkinter.CTk()
 root.title("Hotel Management System - Login")
 root.geometry("350x220")
 
-tk.Label(root, text="Username:", font=("Arial", 12)).pack(pady=5)
-username_entry = tk.Entry(root)
+customtkinter.CTkLabel(root, text="Username:", font=("Arial", 12)).pack(pady=5)
+username_entry = customtkinter.CTkEntry(root)
 username_entry.pack()
 
-tk.Label(root, text="Password:", font=("Arial", 12)).pack(pady=5)
-password_entry = tk.Entry(root, show="*")
+customtkinter.CTkLabel(root, text="Password:", font=("Arial", 12)).pack(pady=5)
+password_entry = customtkinter.CTkEntry(root, show="*")
 password_entry.pack()
 
-tk.Button(root, text="Login", command=login).pack(pady=20)
+customtkinter.CTkButton(root, text="Login", command=login).pack(pady=20)
 
 root.mainloop()
