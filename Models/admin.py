@@ -6,11 +6,11 @@ from database.db_manager import get_connection
 
 
 class Admin(Staff):
-    def __init__(self, staff_id: int, staff_name: str, staff_age: int):
-        # Call el constructor bta3 el parent class w set el role to "admin"
-        super().__init__(staff_id, staff_name, staff_age, staff_role="admin")  # get all el staff attributes and make staffrole=admin
+    def __init__(self, staff_id: int, staff_name: str, staff_age: int, username: str = "admin", password: str = "admin123"):
+        super().__init__(staff_id, staff_name, staff_age, staff_role="admin")
+        self.username = username
+        self.password = password
 
-    # Function deh betsave el admin f el database
     def save_to_db(self):
         # Get el connection bta3 el database
         conn = get_connection()
@@ -19,10 +19,10 @@ class Admin(Staff):
         # Insert or replace el admin f el table bta3 staff
         cursor.execute(
             '''
-            INSERT OR REPLACE INTO staff (staff_id, staff_name, staff_age, staff_role)
-            VALUES (?, ?, ?, ?)
+            INSERT OR REPLACE INTO staff (staff_id, staff_name, staff_age, staff_role, username, password)
+            VALUES (?, ?, ?, ?, ?, ?)
             ''',
-            (self.staff_id, self.staff_name, self.staff_age, self.staff_role)
+            (self.staff_id, self.staff_name, self.staff_age, self.staff_role, self.username, self.password)
         )
 
         # Commit el changes w close el connection
@@ -41,8 +41,8 @@ def ensure_admin_and_staff():
     cursor.execute("SELECT * FROM staff WHERE staff_role = 'admin'")
     admin = cursor.fetchone()
     if not admin:
-        # Law mafish admin, add default admin
-        default_admin = Admin(1, "Admin", 30)
+        # Add default admin with username and password
+        default_admin = Admin(1, "Admin", 30, "admin", "admin123")
         default_admin.save_to_db()
         print("Default Admin added to the database.")
 

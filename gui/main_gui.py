@@ -1,9 +1,17 @@
 import customtkinter
 from tkinter import messagebox
 import sqlite3
+import sys
+import os
+sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
+sys.path.append(os.path.dirname(__file__))
+from Models.admin import edit_staff, remove_staff, ensure_admin_and_staff, Admin
+from Models.staff import Staff
+from admin_menu import open_admin_menu
+from room_gui import open_manage_rooms_window
 
 def get_connection():
-    return sqlite3.connect("c:/Users/minas/OneDrive/Desktop/TERM 2/CS106-Project/database/hotel.db")
+    return sqlite3.connect("C:/Users/hanat/Desktop/College/CS106_FINAL_PROJECT/database/hotel.db")
 
 def check_login(username, password):
     conn = get_connection()
@@ -28,7 +36,7 @@ def login():
     password = password_entry.get()
     role = check_login(username, password)
     if role:
-        root.destroy()
+        root.withdraw()  # Hide the login window instead of destroying it
         open_dashboard(role)
     else:
         messagebox.showerror("Login Failed", "Invalid username or password.")
@@ -49,5 +57,11 @@ password_entry = customtkinter.CTkEntry(root, show="*")
 password_entry.pack()
 
 customtkinter.CTkButton(root, text="Login", command=login).pack(pady=20)
+
+default_admin = Admin(1, "Admin", 30, "admin", "admin123")
+default_admin.save_to_db() 
+
+default_staff = Staff(2, "Default Staff", 25, "staff", "staff", "staff123")
+default_staff.save_to_db()
 
 root.mainloop()
