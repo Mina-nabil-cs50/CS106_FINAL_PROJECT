@@ -11,7 +11,7 @@ from admin_menu import open_admin_menu
 from room_gui import open_manage_rooms_window
 
 def get_connection():
-    return sqlite3.connect("C:/Users/hanat/Desktop/College/CS106_FINAL_PROJECT/database/hotel.db")
+    return sqlite3.connect("C:/Users/minas/OneDrive/Desktop/CS106_FINAL_PROJECT/database/hotel.db")
 
 def check_login(username, password):
     conn = get_connection()

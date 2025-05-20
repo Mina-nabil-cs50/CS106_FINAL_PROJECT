@@ -2,7 +2,7 @@ import customtkinter
 import sqlite3
 
 def get_connection():
-    return sqlite3.connect("C:/Users/hanat/Desktop/College/CS106_FINAL_PROJECT/database/hotel.db")
+    return sqlite3.connect("C:/Users/minas/OneDrive/Desktop/CS106_FINAL_PROJECT/database/hotel.db")
 
 def open_manage_rooms_window():
     win = customtkinter.CTkToplevel()
