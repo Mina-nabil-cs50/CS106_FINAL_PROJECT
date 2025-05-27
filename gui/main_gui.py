@@ -32,7 +32,8 @@ def open_dashboard(role):
         open_staff_menu()
 
 def login():
-    username = username_entry.get()
+    username = username_entry.getgit add .
+()
     password = password_entry.get()
     role = check_login(username, password)
     if role:

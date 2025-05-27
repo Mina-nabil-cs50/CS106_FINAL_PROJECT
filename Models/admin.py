@@ -83,7 +83,10 @@ def admin_functions():
         # Add a Room
         print("\n--- Add a Room ---")
         room_id = int(input("Enter Room ID: "))
-        room_type = input("Enter Room Type (e.g., Single, Double, Suite): ")
+        room_type = input("Enter Room Type (e.g., Single, Double, Suite): ").strip().capitalize()
+        if room_type not in ["Single", "Double"]:
+            print("Invalid room type. Defaulting to 'Single'.")
+            room_type = "Single"
         room_floor = int(input("Enter Room Floor: "))
         room_number = input("Enter Room Number: ")
         price_per_night = float(input("Enter Price Per Night: "))
@@ -142,7 +145,7 @@ def admin_functions():
 
         if new_season in ["winter", "summer", "spring", "fall"]:
             Room.change_season(new_season)
-            print("Season successfully changed to", new_season)
+            print("Season successfully changed to {}".format(new_season))
         else:
             print("Invalid season. Please enter one of the following: winter, summer, spring, fall.")
     elif choice == "9":
