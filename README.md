@@ -99,9 +99,3 @@ This project is for educational use. You may adapt and extend it freely.
 Built by:
 
 * Mina Nabil
-* Hana Tarek
-* Karim Samir
-* Retaj Yousef
-* Retaj Tarek
-* Malak Abdelwahed
-* Ghalia Nassar
